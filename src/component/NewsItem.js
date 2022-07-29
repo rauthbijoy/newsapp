@@ -4,7 +4,7 @@ export default class NewsItem extends Component {
   render() {
     let {title, description, imageUrl, newsUrl} = this.props
     return (
-      <div className='sm:px-2 px-1 py-3'>
+      <div className='sm:px-2 px-1 py-3 sm:flex sm:justify-center'>
         <div className="max-w-sm rounded overflow-hidden shadow-lg">
           <img className="w-full" src={imageUrl} alt="Sunset in the mountains" />
           <div className="px-6 py-4">
