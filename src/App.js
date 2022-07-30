@@ -9,14 +9,8 @@ import {
 
 export default class App extends Component {
 
-  constructor(){
-    super();
-    console.log('this is the constructor from app.js')
-    this.state = {
-      pageSize: 4,
-      country: 'in'    //setting the state for country and pagesize
-    }
-  }
+pageSize = 5; country = 'in';
+
   render() {
     return (
       <div>
@@ -24,25 +18,25 @@ export default class App extends Component {
         <Router>
         <NavBar/>
         <Routes>
-          <Route exact path="/" element={<News pageSize={this.state.pageSize} country={this.state.country} category='general'/>}></Route>
+          <Route exact path="/" element={<News pageSize={this.pageSize} country={this.country} category='general'/>}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/business" element={<News pageSize={this.state.pageSize} country={this.state.country} category='business'/>}></Route>
+          <Route exact path="/business" element={<News pageSize={this.pageSize} country={this.country} category='business'/>}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/entertainment" element={<News pageSize={this.state.pageSize} country={this.state.country} category='entertainment'/>}></Route>
+          <Route exact path="/entertainment" element={<News pageSize={this.pageSize} country={this.country} category='entertainment'/>}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/health" element={<News pageSize={this.state.pageSize} country={this.state.country} category='health'/>}></Route>
+          <Route exact path="/health" element={<News pageSize={this.pageSize} country={this.country} category='health'/>}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/science" element={<News pageSize={this.state.pageSize} country={this.state.country} category='science'/>}></Route>
+          <Route exact path="/science" element={<News pageSize={this.pageSize} country={this.country} category='science'/>}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/sports" element={<News pageSize={this.state.pageSize} country={this.state.country} category='sports'/>}></Route>
+          <Route exact path="/sports" element={<News pageSize={this.pageSize} country={this.country} category='sports'/>}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/technology" element={<News pageSize={this.state.pageSize} country={this.state.country} category='technology'/>}></Route>
+          <Route exact path="/technology" element={<News pageSize={this.pageSize} country={this.country} category='technology'/>}></Route>
         </Routes>
         </Router>
       </div>

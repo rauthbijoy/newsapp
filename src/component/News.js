@@ -155,13 +155,12 @@ export default class News extends Component {
       this.state = {
         articles: this.articles,
         page: 1,
-        pageSize: 10,
         loading: false
       }
     }
-    
-    async componentDidMount(){
-      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f011d18a507a48fcb063644ac134a24c&page=1&pageSize=${this.props.pageSize}`;
+
+    async updateNews(pageNo){
+      const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f011d18a507a48fcb063644ac134a24c&page=${this.state.page}&pageSize=${this.props.pageSize}`;
       this.setState({loading: true});
       let data = await fetch(url);
       let parsedData = await data.json()
@@ -170,32 +169,25 @@ export default class News extends Component {
       loading: false})  
     }
     
+    async componentDidMount(){
+      this.updateNews(); 
+    }
+    
     handlePrevClick= async() =>{
         console.log('prev')
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f011d18a507a48fcb063644ac134a24c&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
-        this.setState({loading: true});
-        let data = await fetch(url);
-        let parsedData = await data.json()
         this.setState({
-          page: this.state.page - 1,
-          articles: parsedData.articles,
-          loading: false
+          page: this.state.page -1
         })
+        this.updateNews();
+
     }
 
     handleNextClick= async() => {
         console.log('next')
-        if(!(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize))){   
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f011d18a507a48fcb063644ac134a24c&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
-        this.setState({loading: true});
-        let data = await fetch(url);
-        let parsedData = await data.json()
         this.setState({
-          page: this.state.page + 1,
-          articles: parsedData.articles,
-          loading: false
+          page: this.state.page + 1
         })
-      }
+        this.updateNews();
     }
 
 
