@@ -14,7 +14,7 @@ export default class App extends Component {
     console.log('this is the constructor from app.js')
     this.state = {
       pageSize: 4,
-      country: 'us'    //setting the state for country and pagesize
+      country: 'in'    //setting the state for country and pagesize
     }
   }
   render() {
