@@ -9,7 +9,7 @@ import {
 
 export default class App extends Component {
 
-pageSize = 5; country = 'us';
+pageSize = 5; country = 'us'; apiKey=process.env.REACT_APP_NEWS_API
 
   render() {
     return (
@@ -18,25 +18,25 @@ pageSize = 5; country = 'us';
         <Router>
         <NavBar/>
         <Routes>
-          <Route exact path="/" element={<News pageSize={this.pageSize} country={this.country} category='general'/>}></Route>
+          <Route exact path="/" element={<News pageSize={this.pageSize} country={this.country} category='general' apiKey={this.apiKey} />}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/business" element={<News pageSize={this.pageSize} country={this.country} category='business'/>}></Route>
+          <Route exact path="/business" element={<News pageSize={this.pageSize} country={this.country} category='business' apiKey={this.apiKey} />}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/entertainment" element={<News pageSize={this.pageSize} country={this.country} category='entertainment'/>}></Route>
+          <Route exact path="/entertainment" element={<News pageSize={this.pageSize} country={this.country} category='entertainment' apiKey={this.apiKey} />}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/health" element={<News pageSize={this.pageSize} country={this.country} category='health'/>}></Route>
+          <Route exact path="/health" element={<News pageSize={this.pageSize} country={this.country} category='health' apiKey={this.apiKey} />}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/science" element={<News pageSize={this.pageSize} country={this.country} category='science'/>}></Route>
+          <Route exact path="/science" element={<News pageSize={this.pageSize} country={this.country} category='science' apiKey={this.apiKey} />}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/sports" element={<News pageSize={this.pageSize} country={this.country} category='sports'/>}></Route>
+          <Route exact path="/sports" element={<News pageSize={this.pageSize} country={this.country} category='sports' apiKey={this.apiKey} />}></Route>
         </Routes>
         <Routes>
-          <Route exact path="/technology" element={<News pageSize={this.pageSize} country={this.country} category='technology'/>}></Route>
+          <Route exact path="/technology" element={<News pageSize={this.pageSize} country={this.country} category='technology' apiKey={this.apiKey} />}></Route>
         </Routes>
         </Router>
       </div>
