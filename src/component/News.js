@@ -194,8 +194,8 @@ export default class News extends Component {
   render() {
     return (
       <>
-        <h2 className="max-w-7xl mx-auto font-mono py-5 text-5xl text-bold">
-          NewsApp - Top News{" "}
+        <h2 className="sm:ml-3 max-w-7xl mx-auto font-mono py-5 text-3xl text-bold">
+          NewsApp - Top News /{this.props.category}
         </h2>
         {this.state.loading && <Spinner/> }
         <div className=" max-w-7xl mx-auto md:grid grid-cols-3 block items-center ">
