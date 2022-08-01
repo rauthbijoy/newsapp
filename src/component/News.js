@@ -1,9 +1,15 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import NewsItem from './NewsItem'
 import Spinner from './Spinner';
 import PropTypes from 'prop-types'
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-export default class News extends Component {
+const News = (props) => {
+    const [articles, setArticles] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [page, setPage] = useState(1)
+    const [totalResults, setTotalResults] = useState(0)
+   
     articles= [
     {
       "source": {
@@ -137,69 +143,45 @@ export default class News extends Component {
     }
     ]
     
-    static defaultProps = {
-      country: 'in',
-      pageSize: 5,
-      category: 'Sports'
-    }
-
-    static propTypes = {
-      country: PropTypes.string,
-      pageSize: PropTypes.number,
-      category: PropTypes.string
-    }
-
-    constructor(){
-      super();
-      console.log('this is the constructor')
-      this.state = {
-        articles: this.articles,
-        page: 1,
-        loading: false
-      }
-    }
-
-    async updateNews(pageNo){
-      const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-      this.setState({loading: true});
+    const updateNews=async()=>{
+      const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+      setLoading(true)
       let data = await fetch(url);
       let parsedData = await data.json()
-      this.setState({articles: parsedData.articles,
-        totalResults: parsedData.totalResults,
-      loading: false})  
+      setArticles(parsedData.articles)
+      setTotalResults(parsedData.totalResults)
+      setLoading(false) 
     }
     
-    async componentDidMount(){
-      this.updateNews(); 
-    }
-    
-    handlePrevClick= async() =>{
-        console.log('prev')
-        this.setState({
-          page: this.state.page -1
-        })
-        this.updateNews();
+    useEffect(() => {
+      updateNews();
+    }, [])
+  
+    const fetchData = async () =>{
+      setPage(page + 1)
+      const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+      let data = await fetch(url);
+      let parsedData = await data.json()
+      setArticles(articles.concat(parsedData.articles))
+      setTotalResults(parsedData.totalResults)
 
     }
 
-    handleNextClick= async() => {
-        console.log('next')
-        this.setState({
-          page: this.state.page + 1
-        })
-        this.updateNews();
-    }
 
-
-  render() {
     return (
       <>
         <h2 className="sm:ml-3 max-w-7xl mx-auto font-mono py-5 text-3xl text-bold">
-          NewsApp - Top News /{this.props.category}
+          NewsApp - Top News /{props.category} 
         </h2>
-        {this.state.loading && <Spinner/> }
+
+        <InfiniteScroll
+          dataLength={articles.length} //This is important field to render the next data
+          next={fetchData}
+          hasMore={articles.length != totalResults}
+          loader={<Spinner/>}
+          >
         <div className=" max-w-7xl mx-auto md:grid grid-cols-3 block items-center ">
-          {!this.state.loading && this.state.articles.map((element) => {
+          {!loading && articles.map((element) => {
             return (
               <div key={element.url}>
                 <NewsItem
@@ -212,27 +194,26 @@ export default class News extends Component {
                   source={element.source.name}
               />
               </div>
+              
             );
           })}
         </div>
-        {/* previous and next button goes here for the page */}
-        <div className="sm:px-3 flex justify-between max-w-7xl mx-auto items-center mb-4">
-          <button
-            className="bg-blue-300 px-2 py-2 rounded transition hover:bg-blue-500 hover:underline shadow"
-            onClick={this.handlePrevClick}
-            disabled={this.state.page<=1}
-          >
-            &larr; Previous
-          </button>
-          <button
-            className="bg-blue-300 px-2 py-2 rounded transition hover:bg-blue-500 hover:underline shadow"
-            onClick={this.handleNextClick}
-            disabled={this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize)}
-          >
-            Next &rarr;
-          </button>
-        </div>
+        </InfiniteScroll>
       </>
     );
-  }
+  
+
+
 }
+News.defaultProps = {
+  country: 'in',
+  pageSize: 5,
+  category: 'Sports'
+}
+
+News.propTypes = {
+  country: PropTypes.string,
+  pageSize: PropTypes.number,
+  category: PropTypes.string
+}
+export default News
