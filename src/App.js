@@ -9,7 +9,7 @@ import {
 
 export default class App extends Component {
 
-pageSize = 5; country = 'us'; apiKey=process.env.REACT_APP_NEWS_API
+pageSize = 6; country = 'in'; apiKey="f011d18a507a48fcb063644ac134a24c"
 
   render() {
     return (
