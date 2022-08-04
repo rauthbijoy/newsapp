@@ -68,7 +68,6 @@ const News = (props) => {
         </InfiniteScroll>
       </>
     );
-  
 
 
 }

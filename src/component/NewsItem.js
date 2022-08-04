@@ -1,4 +1,5 @@
 import React from 'react'
+import noImage from './noImage.jpg'
 
 const NewsItem = (props) => {
 
@@ -7,7 +8,7 @@ const NewsItem = (props) => {
       <div className='sm:px-2 px-1 py-3 sm:flex sm:justify-center'>
         <div className="max-w-sm rounded overflow-hidden shadow-lg">
         <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">{source}</span>
-          <img className="w-full" src={imageUrl} alt="Sunset in the mountains" />
+          <img className="w-full" src={imageUrl?imageUrl:noImage} alt="Sunset in the mountains" />
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2">{title}</div>
             <p className="text-gray-700 text-base">
@@ -24,7 +25,6 @@ const NewsItem = (props) => {
         </div>
       </div>
     )
-  
 }
 
 export default NewsItem
